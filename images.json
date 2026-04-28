@@ -17,5 +17,8 @@
   ],
   "atardeceres": [
     { "file": "atardecer1.jpg", "title": "Sol dorado", "description": "" }
+  ],
+  "amaneceres": [
+    { "file": "amanecer1.jpg", "title": "Primera luz", "description": "" }
   ]
 }
