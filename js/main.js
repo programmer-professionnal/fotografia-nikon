@@ -3,17 +3,43 @@ const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const filterBtns = document.querySelectorAll('.filter-btn');
 
+const categories = ['naturaleza', 'retratos', 'nocturnas', 'urbanas', 'atardeceres', 'amaneceres', 'macro'];
+const repoOwner = 'programmer-professionnal';
+const repoName = 'fotografia-nikon';
+const branch = 'master';
+
 let allImages = {};
 
-async function loadImages() {
+async function fetchImagesFromGitHub(category) {
+    const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images/${category}?ref=${branch}`;
     try {
-        const response = await fetch('images.json');
-        allImages = await response.json();
-        displayImages('todas');
+        const response = await fetch(url);
+        if (!response.ok) return [];
+        const files = await response.json();
+        return files
+            .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file.name))
+            .map(file => ({
+                file: file.name,
+                title: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
+                category: category
+            }));
     } catch (error) {
-        console.error('Error cargando imágenes:', error);
-        gallery.innerHTML = '<div class="empty-state"><p>Error cargando images.json<br>Asegúrate de que el archivo existe</p></div>';
+        console.error(`Error fetching ${category}:`, error);
+        return [];
     }
+}
+
+async function loadImages() {
+    gallery.innerHTML = '<div class="empty-state"><p>Cargando fotos...</p></div>';
+    
+    const promises = categories.map(cat => fetchImagesFromGitHub(cat));
+    const results = await Promise.all(promises);
+    
+    categories.forEach((cat, i) => {
+        allImages[cat] = results[i];
+    });
+    
+    displayImages('todas');
 }
 
 function displayImages(filter) {
@@ -23,12 +49,10 @@ function displayImages(filter) {
     
     if (filter === 'todas') {
         Object.keys(allImages).forEach(cat => {
-            imagesToShow = imagesToShow.concat(
-                allImages[cat].map(img => ({ ...img, category: cat }))
-            );
+            imagesToShow = imagesToShow.concat(allImages[cat]);
         });
     } else if (allImages[filter]) {
-        imagesToShow = allImages[filter].map(img => ({ ...img, category: filter }));
+        imagesToShow = allImages[filter];
     }
 
     if (imagesToShow.length === 0) {
@@ -36,19 +60,19 @@ function displayImages(filter) {
         return;
     }
 
-    imagesToShow.forEach(({ file, title, description, category }) => {
+    imagesToShow.forEach(({ file, title, category }) => {
         const div = document.createElement('div');
         div.className = 'photo';
         div.dataset.category = category;
         
         const img = document.createElement('img');
-        img.src = `images/${category}/${file}`;
+        img.src = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branch}/images/${category}/${encodeURIComponent(file)}`;
         img.alt = title || `Foto ${category}`;
         img.loading = 'lazy';
         
         img.onerror = () => div.remove();
         
-        img.onclick = () => openLightbox(`images/${category}/${file}`, title);
+        img.onclick = () => openLightbox(img.src, title);
         
         div.appendChild(img);
         gallery.appendChild(div);
