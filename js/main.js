@@ -5,46 +5,22 @@
     const lightboxCaption = document.getElementById('lightbox-caption');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
-    const categories = ['naturaleza', 'retratos', 'nocturnas', 'urbanas', 'atardeceres', 'amaneceres', 'macro'];
-    const repoOwner = 'programmer-professionnal';
-    const repoName = 'fotografia-nikon';
-    const branch = 'master';
-
     let allImages = {};
     let currentImages = [];
     let currentIndex = -1;
 
-    async function fetchImagesFromGitHub(category) {
-        const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/images/${category}?ref=${branch}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) return [];
-            const files = await response.json();
-            return files
-                .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file.name))
-                .map(file => ({
-                    file: file.name,
-                    title: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
-                    category: category,
-                    url: `https://raw.githubusercontent.com/${repoOwner}/${repoName}/${branch}/images/${category}/${encodeURIComponent(file.name)}`
-                }));
-        } catch (error) {
-            console.error(`Error fetching ${category}:`, error);
-            return [];
-        }
-    }
-
     async function loadImages() {
         gallery.innerHTML = '<div class="empty-state"><p>Cargando fotos...</p></div>';
         
-        const promises = categories.map(cat => fetchImagesFromGitHub(cat));
-        const results = await Promise.all(promises);
-        
-        categories.forEach((cat, i) => {
-            allImages[cat] = results[i];
-        });
-        
-        displayImages('todas');
+        try {
+            const response = await fetch('images.json?t=' + new Date().getTime());
+            if (!response.ok) throw new Error('No se pudo cargar images.json');
+            allImages = await response.json();
+            displayImages('todas');
+        } catch (error) {
+            console.error('Error:', error);
+            gallery.innerHTML = '<div class="empty-state"><p>Error cargando las imágenes<br>Asegúrate de ejecutar generate-images.js</p></div>';
+        }
     }
 
     function displayImages(filter) {
@@ -67,10 +43,10 @@
         currentImages.forEach((imgData, index) => {
             const div = document.createElement('div');
             div.className = 'photo';
-            div.dataset.category = imgData.category;
+            div.dataset.category = imgData.category || filter;
             
             const img = document.createElement('img');
-            img.src = imgData.url;
+            img.src = `images/${imgData.category || filter}/${imgData.file}`;
             img.alt = imgData.title;
             img.loading = 'lazy';
             
@@ -92,7 +68,7 @@
     function updateLightboxImage() {
         if (currentIndex < 0 || currentIndex >= currentImages.length) return;
         const imgData = currentImages[currentIndex];
-        lightboxImg.src = imgData.url;
+        lightboxImg.src = `images/${imgData.category}/${imgData.file}`;
         lightboxCaption.textContent = imgData.title;
     }
 

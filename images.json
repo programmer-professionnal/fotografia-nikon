@@ -1,25 +1,20 @@
 {
-  "naturaleza": [
-    { "file": "foto1.jpg", "title": "Bosque al amanecer", "description": "" },
-    { "file": "foto2.jpg", "title": "Río en calma", "description": "" }
-  ],
-  "retratos": [
-    { "file": "retrato1.jpg", "title": "Retrato en luz natural", "description": "" }
-  ],
-  "nocturnas": [
-    { "file": "noche1.jpg", "title": "Cielo estrellado", "description": "" }
-  ],
-  "urbanas": [
-    { "file": "ciudad1.jpg", "title": "Arquitectura moderna", "description": "" }
-  ],
-  "macro": [
-    { "file": "macro1.jpg", "title": "Detalle de flor", "description": "" }
-  ],
+  "naturaleza": [],
+  "retratos": [],
+  "nocturnas": [],
+  "urbanas": [],
   "atardeceres": [
-    { "file": "atardecer-dorado-playa.png", "title": "Atardecer dorado en la playa", "description": "" },
-    { "file": "amanecer-niebla-montanas.png", "title": "Entre niebla y montañas", "description": "" }
+    {
+      "file": "atardecer-dorado.png",
+      "title": "atardecer dorado",
+      "description": ""
+    },
+    {
+      "file": "atardecer-niebla-montanas.png",
+      "title": "atardecer niebla montanas",
+      "description": ""
+    }
   ],
-  "amaneceres": [
-    { "file": "amanecer1.jpg", "title": "Primera luz", "description": "" }
-  ]
+  "amaneceres": [],
+  "macro": []
 }
