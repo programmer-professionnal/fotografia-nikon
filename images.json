@@ -16,7 +16,8 @@
     { "file": "macro1.jpg", "title": "Detalle de flor", "description": "" }
   ],
   "atardeceres": [
-    { "file": "atardecer1.jpg", "title": "Sol dorado", "description": "" }
+    { "file": "atardecer-dorado-playa.png", "title": "Atardecer dorado en la playa", "description": "" },
+    { "file": "amanecer-niebla-montanas.png", "title": "Entre niebla y montañas", "description": "" }
   ],
   "amaneceres": [
     { "file": "amanecer1.jpg", "title": "Primera luz", "description": "" }
