@@ -48,15 +48,16 @@ function displayImages(filter) {
         
         img.onerror = () => div.remove();
         
-        img.onclick = () => openLightbox(`images/${category}/${file}`);
+        img.onclick = () => openLightbox(`images/${category}/${file}`, title);
         
         div.appendChild(img);
         gallery.appendChild(div);
     });
 }
 
-function openLightbox(src) {
+function openLightbox(src, title) {
     lightboxImg.src = src;
+    document.getElementById('lightbox-caption').textContent = title || '';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
