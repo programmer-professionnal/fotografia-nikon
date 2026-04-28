@@ -15,7 +15,8 @@ categories.forEach(category => {
         .map(file => ({
             file: file,
             title: file.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
-            description: ""
+            description: "",
+            category: category
         }));
     
     result[category] = files;

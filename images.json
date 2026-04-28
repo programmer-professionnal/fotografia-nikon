@@ -7,12 +7,14 @@
     {
       "file": "atardecer-dorado.png",
       "title": "atardecer dorado",
-      "description": ""
+      "description": "",
+      "category": "atardeceres"
     },
     {
       "file": "atardecer-niebla-montanas.png",
       "title": "atardecer niebla montanas",
-      "description": ""
+      "description": "",
+      "category": "atardeceres"
     }
   ],
   "amaneceres": [],

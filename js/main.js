@@ -19,7 +19,7 @@
             displayImages('todas');
         } catch (error) {
             console.error('Error:', error);
-            gallery.innerHTML = '<div class="empty-state"><p>Error cargando las imágenes<br>Asegúrate de ejecutar generate-images.js</p></div>';
+            gallery.innerHTML = '<div class="empty-state"><p>Error cargando las imágenes</p></div>';
         }
     }
 
@@ -41,27 +41,25 @@
         }
 
         currentImages.forEach((imgData, index) => {
-            const div = document.createElement('div');
-            div.className = 'photo';
-            div.dataset.category = imgData.category || filter;
-            
             const img = document.createElement('img');
-            img.src = `images/${imgData.category || filter}/${imgData.file}`;
+            img.src = `images/${imgData.category}/${imgData.file}`;
             img.alt = imgData.title;
             img.loading = 'lazy';
+            img.dataset.index = index;
             
-            img.onerror = () => div.remove();
-            img.onclick = () => openLightbox(index);
+            img.onerror = () => img.remove();
+            img.onclick = function() {
+                openLightbox(parseInt(this.dataset.index));
+            };
             
-            div.appendChild(img);
-            gallery.appendChild(div);
+            gallery.appendChild(img);
         });
     }
 
     function openLightbox(index) {
         currentIndex = index;
         updateLightboxImage();
-        lightbox.classList.add('active');
+        lightbox.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
 
@@ -73,7 +71,7 @@
     }
 
     function closeLightbox() {
-        lightbox.classList.remove('active');
+        lightbox.style.display = 'none';
         document.body.style.overflow = 'auto';
         currentIndex = -1;
     }
@@ -107,7 +105,7 @@
     };
 
     document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('active')) return;
+        if (lightbox.style.display !== 'flex') return;
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowRight') nextImage();
         if (e.key === 'ArrowLeft') prevImage();
