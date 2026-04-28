@@ -14,5 +14,8 @@
   ],
   "macro": [
     { "file": "macro1.jpg", "title": "Detalle de flor", "description": "" }
+  ],
+  "atardeceres": [
+    { "file": "atardecer1.jpg", "title": "Sol dorado", "description": "" }
   ]
 }
