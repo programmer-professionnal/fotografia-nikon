@@ -1,0 +1,17 @@
+# Imágenes (no subir fotos originales)
+images/**/*.jpg
+images/**/*.jpeg
+images/**/*.png
+images/**/*.webp
+images/**/*.raw
+images/**/*.nef
+
+# Mantener las carpetas vacías
+!images/**/.gitkeep
+
+# Dependencias
+node_modules/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

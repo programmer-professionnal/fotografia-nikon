@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Fotografía - Nikon D50</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Mi Fotografía</h1>
+        <p class="subtitle">Capturado con Nikon D50</p>
+    </header>
+
+    <nav>
+        <button class="filter-btn active" data-filter="todas">Todas</button>
+        <button class="filter-btn" data-filter="naturaleza">Naturaleza</button>
+        <button class="filter-btn" data-filter="retratos">Retratos</button>
+        <button class="filter-btn" data-filter="nocturnas">Nocturnas</button>
+        <button class="filter-btn" data-filter="urbanas">Urbana</button>
+        <button class="filter-btn" data-filter="macro">Macro</button>
+    </nav>
+
+    <main>
+        <div class="gallery" id="gallery">
+            <div class="empty-state">
+                <p>Arrastra tus fotos a las carpetas en <code>images/</code> para comenzar</p>
+                <p class="hint">Naturaleza → images/naturaleza/<br>Retratos → images/retratos/<br>Nocturnas → images/nocturnas/<br>Urbana → images/urbanas/<br>Macro → images/macro/</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
